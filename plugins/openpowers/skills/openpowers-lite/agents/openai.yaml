@@ -1,0 +1,4 @@
+interface:
+  display_name: "OpenPowers Lite"
+  short_description: "Guard OpenSpec work with lightweight execution discipline."
+  default_prompt: "Run this OpenSpec change with OpenPowers Lite discipline."

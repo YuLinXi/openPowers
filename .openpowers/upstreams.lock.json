@@ -1,0 +1,38 @@
+{
+  "generated_at": "2026-07-01T12:43:52+00:00",
+  "upstreams": [
+    {
+      "name": "OpenSpec repository",
+      "resolved": "546224e00db26bd1be69874be465d5d6f5e4a851",
+      "source": {
+        "name": "OpenSpec repository",
+        "ref": "refs/heads/main",
+        "type": "git",
+        "url": "https://github.com/Fission-AI/OpenSpec.git"
+      },
+      "type": "git"
+    },
+    {
+      "name": "OpenSpec npm package",
+      "resolved": "1.5.0",
+      "source": {
+        "name": "OpenSpec npm package",
+        "package": "@fission-ai/openspec",
+        "registry": "https://registry.npmjs.org",
+        "type": "npm"
+      },
+      "type": "npm"
+    },
+    {
+      "name": "Superpowers repository",
+      "resolved": "f268f7c953744036f0fa7e9d4b73535c04e57cb8",
+      "source": {
+        "name": "Superpowers repository",
+        "ref": "refs/heads/main",
+        "type": "git",
+        "url": "https://github.com/obra/Superpowers.git"
+      },
+      "type": "git"
+    }
+  ]
+}

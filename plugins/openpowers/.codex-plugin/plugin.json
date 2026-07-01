@@ -1,0 +1,32 @@
+{
+  "name": "openpowers",
+  "version": "0.1.0",
+  "description": "OpenSpec plus Superpowers Lite workflow guard for Codex.",
+  "author": {
+    "name": "YuLinXi",
+    "url": "https://github.com/YuLinXi"
+  },
+  "homepage": "https://github.com/YuLinXi/openPowers",
+  "repository": "https://github.com/YuLinXi/openPowers",
+  "license": "MIT",
+  "keywords": [
+    "openspec",
+    "superpowers",
+    "workflow",
+    "tdd",
+    "verification"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "OpenPowers",
+    "shortDescription": "OpenSpec work guarded by Superpowers Lite discipline.",
+    "longDescription": "OpenPowers keeps OpenSpec as the single product specification source while adding lightweight execution discipline for planning, TDD, review, verification, and upgrade audits.",
+    "developerName": "YuLinXi",
+    "category": "Productivity",
+    "capabilities": [
+      "Write",
+      "Review"
+    ],
+    "defaultPrompt": "Use OpenPowers Lite for this OpenSpec change."
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "upstreams": [
+    {
+      "name": "OpenSpec repository",
+      "type": "git",
+      "url": "https://github.com/Fission-AI/OpenSpec.git",
+      "ref": "refs/heads/main"
+    },
+    {
+      "name": "OpenSpec npm package",
+      "type": "npm",
+      "package": "@fission-ai/openspec",
+      "registry": "https://registry.npmjs.org"
+    },
+    {
+      "name": "Superpowers repository",
+      "type": "git",
+      "url": "https://github.com/obra/Superpowers.git",
+      "ref": "refs/heads/main"
+    }
+  ]
+}
