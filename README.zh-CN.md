@@ -94,6 +94,32 @@ codex plugin add openpowers@openpowers
 Use OpenPowers Lite to implement OpenSpec change <change-id>. Keep OpenSpec as the only product spec source, use TDD where practical, and report verification evidence.
 ```
 
+## 工作流命令与 Skill 映射
+
+终端命令用于读取 OpenSpec 状态、做验证和运行项目测试。AI chat 命令用于生成 OpenSpec artifacts、实现和归档。`openpowers-lite` 是本插件提供的 Codex skill；`/opsx:*` 命令来自目标项目中 OpenSpec 生成的集成。
+
+| 阶段 | 如何使用 | 命令 | 触发的 skill 或 chat 命令 | 完成标准 |
+| --- | --- | --- | --- | --- |
+| 0. 初始化 | 在目标项目安装 OpenSpec，并在 Codex 安装本插件。 | `npm install -g @fission-ai/openspec@latest`<br>`openspec init`<br>`codex plugin marketplace add YuLinXi/openPowers --ref main`<br>`codex plugin add openpowers@openpowers` | 开一个新的 Codex 线程，让 `openpowers-lite` 可以被发现。 | 存在 `openspec/`，`/opsx:*` 命令可识别，Codex 能触发 `openpowers-lite`。 |
+| 1. 判断请求类型 | 判断请求是否必须进入 OpenSpec。 | 通常不需要命令。可选上下文检查：<br>`openspec list --json`<br>`openspec list --specs --json` | `Use OpenPowers Lite to classify this request against AGENTS.md.` | 行为变更进入 OpenSpec；杂务或机械改动可以不新建 spec。 |
+| 2. 探索 | 在创建 artifact 前澄清模糊需求。 | `openspec list --specs`<br>`openspec show <spec-id> --type spec` | `/opsx:explore`，并补充 `Use OpenPowers Lite to keep OpenSpec as the WHAT source.` | 模糊点已记录，下一步明确为停止、propose，或选择已有 change。 |
+| 3. 提案 | 创建或更新 OpenSpec change。 | 可选脚手架：<br>`openspec new change <change-id>`<br>查看状态：<br>`openspec status --change <change-id>` | `/opsx:propose <change-id>` 或 `Use OpenPowers Lite to draft/review OpenSpec change <change-id>.` | proposal、delta specs、design 和 tasks 已足够可审查，可以进入实现。 |
+| 4. 规划 | 将 OpenSpec artifacts 转成实现计划。 | `openspec show <change-id> --json`<br>`openspec status --change <change-id> --json`<br>`openspec instructions apply --change <change-id> --json` | `Use OpenPowers Lite to plan implementation for <change-id>.` | 已明确 OpenSpec 来源、风险和第一个测试目标。 |
+| 5. TDD 实现 | 先写最小有用失败检查，再实现。 | 项目相关命令，例如：<br>`npm test`<br>`pytest`<br>`go test ./...`<br>`cargo test` | `/opsx:apply <change-id>`，并补充 `Use OpenPowers Lite; keep the diff scoped and use TDD where practical.` | 选定行为可工作，diff 聚焦，测试覆盖关键边界。 |
+| 6. 同步与 review | 将实际改动与 OpenSpec tasks/specs 对齐。 | `git diff`<br>`openspec status --change <change-id>`<br>`openspec show <change-id>` | 启用时使用 `/opsx:sync <change-id>`，并补充 `Use OpenPowers Lite to review against the OpenSpec delta.` | tasks/specs 反映现实，且没有引入 OpenSpec 之外的重复产品规格源。 |
+| 7. 验证 | 证明实现和 spec 结构都正确。 | `openspec validate <change-id> --strict`<br>`openspec validate --all --strict`<br>相关项目 test/lint/type/build 命令 | 启用时使用 `/opsx:verify <change-id>`，并补充 `Use OpenPowers Lite to produce verification evidence.` | OpenSpec validation 和相关项目检查通过；如果失败，必须诚实报告。 |
+| 8. 归档 | 将已接受工作写入 OpenSpec 历史。 | `openspec archive <change-id> --yes`<br>仅工具类变更：<br>`openspec archive <change-id> --skip-specs --yes` | `/opsx:archive <change-id>` 或 `Use OpenPowers Lite to confirm archive readiness.` | delta specs 已合并或明确跳过，change 已归档。 |
+| 9. 升级工作流规则 | 刷新上游追踪，但不静默改变本地规则。 | `python3 scripts/openpowers_lite.py upgrade-check`<br>`python3 scripts/openpowers_lite.py upgrade-check --write-lock` | `Use OpenPowers Lite to review an OpenSpec/Superpowers upstream update.` | 生成 `.openpowers/upgrade-report.md`、`.openpowers/UPGRADE_CHANGELOG.md` 和可审查 diff。 |
+
+如果目标项目无法识别 `/opsx:*` 命令，运行：
+
+```bash
+openspec init
+openspec update
+```
+
+然后重启 AI 工具或开启新线程。OpenSpec 上游命令细节见官方 [getting started guide](https://github.com/Fission-AI/OpenSpec/blob/main/docs/getting-started.md) 和 [CLI reference](https://github.com/Fission-AI/OpenSpec/blob/main/docs/cli.md)。
+
 ## 验证本仓库
 
 运行本地检查：

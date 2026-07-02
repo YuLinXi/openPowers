@@ -94,6 +94,32 @@ For Codex, a good working prompt is:
 Use OpenPowers Lite to implement OpenSpec change <change-id>. Keep OpenSpec as the only product spec source, use TDD where practical, and report verification evidence.
 ```
 
+## Workflow Command and Skill Map
+
+Use terminal commands for OpenSpec state, validation, and project tests. Use AI chat commands for OpenSpec artifact work and implementation. `openpowers-lite` is the Codex skill from this plugin; `/opsx:*` commands come from the OpenSpec integration generated in the target project.
+
+| Stage | How to use it | Commands | Skill or chat trigger | Done when |
+| --- | --- | --- | --- | --- |
+| 0. Bootstrap | Install OpenSpec in the target project and install this plugin in Codex. | `npm install -g @fission-ai/openspec@latest`<br>`openspec init`<br>`codex plugin marketplace add YuLinXi/openPowers --ref main`<br>`codex plugin add openpowers@openpowers` | Start a new Codex thread so `openpowers-lite` is discoverable. | `openspec/` exists, `/opsx:*` commands are recognized, and Codex can trigger `openpowers-lite`. |
+| 1. Classify | Decide whether the request needs OpenSpec. | Usually none. Optional context checks:<br>`openspec list --json`<br>`openspec list --specs --json` | `Use OpenPowers Lite to classify this request against AGENTS.md.` | Behavior changes go to OpenSpec; chores or mechanical edits can proceed without a new spec. |
+| 2. Explore | Clarify fuzzy requirements before creating artifacts. | `openspec list --specs`<br>`openspec show <spec-id> --type spec` | `/opsx:explore` plus `Use OpenPowers Lite to keep OpenSpec as the WHAT source.` | Ambiguity is captured, and the next step is either stop, propose, or select an existing change. |
+| 3. Propose | Create or update the OpenSpec change. | Optional scaffold:<br>`openspec new change <change-id>`<br>Status:<br>`openspec status --change <change-id>` | `/opsx:propose <change-id>` or `Use OpenPowers Lite to draft/review OpenSpec change <change-id>.` | Proposal, delta specs, design, and tasks are reviewed enough for implementation. |
+| 4. Plan | Turn OpenSpec artifacts into an implementation plan. | `openspec show <change-id> --json`<br>`openspec status --change <change-id> --json`<br>`openspec instructions apply --change <change-id> --json` | `Use OpenPowers Lite to plan implementation for <change-id>.` | The OpenSpec source is named, risks are explicit, and the first test target is known. |
+| 5. Implement with TDD | Write the smallest useful failing check, then implement. | Project-specific commands, for example:<br>`npm test`<br>`pytest`<br>`go test ./...`<br>`cargo test` | `/opsx:apply <change-id>` plus `Use OpenPowers Lite; keep the diff scoped and use TDD where practical.` | The selected behavior works, the diff is scoped, and tests cover the important boundary. |
+| 6. Sync and review | Reconcile what changed with OpenSpec tasks and specs. | `git diff`<br>`openspec status --change <change-id>`<br>`openspec show <change-id>` | `/opsx:sync <change-id>` when enabled, plus `Use OpenPowers Lite to review against the OpenSpec delta.` | Tasks and specs reflect reality, and no duplicate product-spec source was introduced. |
+| 7. Verify | Prove the implementation and spec structure. | `openspec validate <change-id> --strict`<br>`openspec validate --all --strict`<br>Relevant project test/lint/type/build commands | `/opsx:verify <change-id>` when enabled, plus `Use OpenPowers Lite to produce verification evidence.` | OpenSpec validation and relevant project checks pass, or failures are reported honestly. |
+| 8. Archive | Move accepted work into OpenSpec history. | `openspec archive <change-id> --yes`<br>For tooling-only changes:<br>`openspec archive <change-id> --skip-specs --yes` | `/opsx:archive <change-id>` or `Use OpenPowers Lite to confirm archive readiness.` | Delta specs are merged or intentionally skipped, and the change is archived. |
+| 9. Upgrade workflow rules | Refresh upstream tracking without silently changing local rules. | `python3 scripts/openpowers_lite.py upgrade-check`<br>`python3 scripts/openpowers_lite.py upgrade-check --write-lock` | `Use OpenPowers Lite to review an OpenSpec/Superpowers upstream update.` | `.openpowers/upgrade-report.md`, `.openpowers/UPGRADE_CHANGELOG.md`, and a reviewable diff exist. |
+
+If `/opsx:*` commands are not recognized in the target project, run:
+
+```bash
+openspec init
+openspec update
+```
+
+Then restart the AI tool or start a new thread. See the OpenSpec [getting started guide](https://github.com/Fission-AI/OpenSpec/blob/main/docs/getting-started.md) and [CLI reference](https://github.com/Fission-AI/OpenSpec/blob/main/docs/cli.md) for the upstream command details.
+
 ## Verify This Repository
 
 Run the local checks:
