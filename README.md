@@ -1,5 +1,7 @@
 # OpenPowers
 
+Languages: [English](README.md) | [简体中文](README.zh-CN.md)
+
 OpenPowers is an out-of-the-box **OpenSpec + Superpowers Lite** Codex plugin/repository template.
 
 It does not merge two full workflows into a larger framework. The contract is deliberately small:
