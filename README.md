@@ -61,6 +61,37 @@ Start a new Codex thread after installing so the `openpowers-lite` skill is avai
 
 5. Require final reports to include the OpenSpec source, code/docs changed, validation commands, unverified areas, and residual risk.
 
+## Recommended Development Workflow
+
+Use this workflow for product behavior changes in an OpenSpec project:
+
+1. **Classify the request**
+   Decide whether the request changes product behavior, API behavior, domain rules, permissions, data model semantics, or accepted edge cases. If yes, route it through OpenSpec.
+
+2. **Select or create the OpenSpec change**
+   Use the target project's OpenSpec workflow to find the controlling proposal/task/spec. If none exists, create an OpenSpec change before implementation. Keep requirements in OpenSpec only.
+
+3. **Plan from WHAT to HOW**
+   Restate the OpenSpec source, identify ambiguity, and choose the smallest implementation path. OpenPowers Lite should shape execution discipline, not add another product spec.
+
+4. **Write the first failing check when practical**
+   Add or update the narrowest test that captures the OpenSpec behavior boundary. Skip TDD only when the change is documentation-only, purely mechanical, or not meaningfully testable.
+
+5. **Implement in a scoped diff**
+   Change only the files needed for the selected OpenSpec change. Avoid opportunistic refactors, unrelated formatting, and new abstractions unless the current change genuinely needs them.
+
+6. **Review against the OpenSpec delta**
+   Check that the diff satisfies the OpenSpec change, that tests cover the important behavior, and that no duplicate product-spec source was introduced outside OpenSpec.
+
+7. **Verify and archive**
+   Run the relevant project tests plus OpenSpec validation. After the change is accepted, archive it through OpenSpec so OpenSpec remains the historical source of product truth.
+
+For Codex, a good working prompt is:
+
+```text
+Use OpenPowers Lite to implement OpenSpec change <change-id>. Keep OpenSpec as the only product spec source, use TDD where practical, and report verification evidence.
+```
+
 ## Verify This Repository
 
 Run the local checks:
